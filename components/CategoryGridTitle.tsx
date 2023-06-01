@@ -6,11 +6,18 @@ import { Card } from './Card'
 type Props = {
 	title: string
 	color: string
+	id: string
+	onProgress: (id: string) => void
 }
-export function CategoryGridTitle({ title, color }: Props) {
+export function CategoryGridTitle({ title, color, id, onProgress }: Props) {
 	return (
 		<Card style={styles.gridItem}>
 			<Pressable
+				onPress={() => {
+					if (onProgress && id) {
+						onProgress(id)
+					}
+				}}
 				style={({ pressed }) => {
 					// for IOS ripple effect
 					return [styles.button, pressed && styles.pressedItem]
