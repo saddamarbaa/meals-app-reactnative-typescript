@@ -1,18 +1,18 @@
 import React from 'react'
 import { View, StyleSheet, ViewStyle } from 'react-native'
 
-type CardDType = {
+type CardProps = {
 	children: React.ReactNode
 	style?: ViewStyle
 }
 
-export function Card({ children, style }: CardDType) {
-	return <View style={[cardStyles.card, style]}>{children}</View>
+export function Card({ children, style }: CardProps) {
+	return <View style={[styles.card, style]}>{children}</View>
 }
 
-const cardStyles = StyleSheet.create({
+const styles = StyleSheet.create({
 	card: {
-		// Ios
+		// iOS
 		shadowOffset: { width: 0, height: 3 },
 		shadowOpacity: 0.4,
 		shadowRadius: 2,
@@ -24,7 +24,6 @@ const cardStyles = StyleSheet.create({
 		backgroundColor: 'white',
 		margin: 10,
 		fontSize: 22,
-		// width: '100%',
 		textAlign: 'center',
 		padding: 16,
 	},

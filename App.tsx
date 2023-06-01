@@ -1,21 +1,15 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
-import CategoriesScreen from './screens/CategoriesScreen'
+
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { AppNavigator } from './navigation'
 
 export default function App() {
 	return (
-		<View style={styles.container}>
-			<StatusBar style="auto" />
-			<CategoriesScreen />
-		</View>
+		<>
+			<SafeAreaProvider>
+				<StatusBar style="light" />
+				<AppNavigator />
+			</SafeAreaProvider>
+		</>
 	)
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		// backgroundColor: '#fff',
-		// alignItems: 'center',
-		// justifyContent: 'center',
-	},
-})

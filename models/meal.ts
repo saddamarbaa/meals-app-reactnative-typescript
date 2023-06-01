@@ -1,4 +1,6 @@
-class Meal {
+import { MealT } from '../types'
+
+export class Meal {
 	id: string
 	categoryIds: string[]
 	title: string
@@ -7,27 +9,27 @@ class Meal {
 	imageUrl: string
 	duration: number
 	ingredients: string[]
-	steps: string[]
-	isGlutenFree: boolean
-	isVegan: boolean
-	isVegetarian: boolean
-	isLactoseFree: boolean
+	steps?: string[]
+	isGlutenFree?: boolean
+	isVegan?: boolean
+	isVegetarian?: boolean
+	isLactoseFree?: boolean
 
-	constructor(
-		id: string,
-		categoryIds: string[],
-		title: string,
-		affordability: string,
-		complexity: string,
-		imageUrl: string,
-		duration: number,
-		ingredients: string[],
-		steps: string[],
-		isGlutenFree: boolean,
-		isVegan: boolean,
-		isVegetarian: boolean,
-		isLactoseFree: boolean,
-	) {
+	constructor({
+		id,
+		categoryIds,
+		title,
+		imageUrl,
+		steps,
+		ingredients,
+		duration,
+		complexity,
+		affordability,
+		isVegan,
+		isVegetarian,
+		isGlutenFree,
+		isLactoseFree,
+	}: MealT) {
 		this.id = id
 		this.categoryIds = categoryIds
 		this.title = title

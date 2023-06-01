@@ -10,14 +10,13 @@ import {
 
 import { CATEGORIES } from '../utils'
 import { CategoryGridTitle } from '../components'
-import { CategoryT } from '../types'
+import { CategoryT, MealCategoriesScreenProps } from '../types'
 
-export default function CategoriesScreen() {
+export function CategoriesScreen({
+	route,
+	navigation,
+}: MealCategoriesScreenProps) {
 	const [refreshing, setRefreshing] = useState(false)
-
-	function renderCategoryItem(category: CategoryT) {
-		return <CategoryGridTitle color={category.color} title={category.title} />
-	}
 
 	const handleRefresh = () => {
 		setRefreshing((prevState) => !prevState)
@@ -29,6 +28,25 @@ export default function CategoriesScreen() {
 
 	const myListEmpty = () => {
 		return null
+	}
+
+	const onProgress = (categoryId: string) => {
+		if (categoryId) {
+			navigation.navigate('MealOverView', {
+				categoryId: categoryId,
+			})
+		}
+	}
+
+	const renderCategoryItem = (category: CategoryT) => {
+		return (
+			<CategoryGridTitle
+				color={category.color}
+				title={category.title}
+				id={category.id}
+				onProgress={onProgress}
+			/>
+		)
 	}
 
 	return (
@@ -49,6 +67,8 @@ export default function CategoriesScreen() {
 		</SafeAreaView>
 	)
 }
+
+export default CategoriesScreen
 
 const styles = StyleSheet.create({
 	droidSafeArea: {
