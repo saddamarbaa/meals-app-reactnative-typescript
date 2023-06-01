@@ -19,4 +19,5 @@ export const GlobalScreenOption = {
 	},
 	headerTitleStyle: { color: colors.white },
 	headerTintColor: colors.white,
+	headerTitleAlign: 'center',
 }

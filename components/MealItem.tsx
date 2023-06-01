@@ -9,7 +9,8 @@ import {
 } from 'react-native'
 
 import { Card } from './Card'
-import { MealT } from '../types'
+import { MealT, RootStackParamList } from '../types'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 interface Props extends MealT {
 	onProgress?: (id: string) => void
@@ -31,11 +32,20 @@ export function MealItem({
 	isLactoseFree,
 	onProgress,
 }: Props) {
+	const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+
+	const handlePress = (mealId: string) => {
+		if (mealId) {
+			navigation.navigate('MealDetail', {
+				mealId: mealId,
+			})
+		}
+	}
 	return (
 		<Card style={styles.mealItem}>
 			<Pressable
 				onPress={() => {
-					onProgress?.(id)
+					handlePress(id)
 				}}
 				style={({ pressed }) => [styles.button, pressed && styles.pressedItem]}
 				android_ripple={{ color: '#ccc' }}>

@@ -64,10 +64,10 @@ export function MealOverViewScreen({
 		return null
 	}
 
-	const onProgress = (categoryId: string) => {
-		if (categoryId) {
-			navigation.navigate('MealOverView', {
-				categoryId: categoryId,
+	const onProgress = (mealId: string) => {
+		if (mealId) {
+			navigation.navigate('MealDetail', {
+				mealId: mealId,
 			})
 		}
 	}
@@ -88,7 +88,7 @@ export function MealOverViewScreen({
 			isVegetarian: meal.isVegetarian,
 			isLactoseFree: meal.isLactoseFree,
 		}
-		return <MealItem {...MealItemProps} />
+		return <MealItem {...MealItemProps} onProgress={onProgress} />
 	}
 
 	return (

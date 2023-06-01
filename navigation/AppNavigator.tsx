@@ -2,8 +2,12 @@ import * as React from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
-import { CategoriesScreen, MealOverViewScreen } from '../screens'
+import { Text } from 'react-native'
+import {
+	CategoriesScreen,
+	MealOverViewScreen,
+	MealDetailScreen,
+} from '../screens'
 import { RootStackParamList } from '../types'
 import { GlobalScreenOption } from '../constants'
 
@@ -16,6 +20,7 @@ export function AppNavigator() {
 				screenOptions={({ route }) => ({
 					...GlobalScreenOption,
 					headerShown: true,
+					headerTitleAlign: 'center',
 				})}>
 				<Stack.Screen
 					name="MealCategories"
@@ -32,6 +37,8 @@ export function AppNavigator() {
 						title: route.params.categoryId,
 					})}
 				/>
+
+				<Stack.Screen name="MealDetail" component={MealDetailScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

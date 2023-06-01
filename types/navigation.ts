@@ -7,6 +7,7 @@ import {
 export type RootStackParamList = {
 	MealCategories: undefined
 	MealOverView: { categoryId: string }
+	MealDetail: { mealId: string }
 	Feed: { sort: 'latest' | 'top' } | undefined
 }
 
@@ -18,4 +19,9 @@ export type MealCategoriesScreenProps = NativeStackScreenProps<
 export type MealOverViewScreenProps = NativeStackScreenProps<
 	RootStackParamList,
 	'MealOverView'
+>
+
+export type MealDetailScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	'MealDetail'
 >
