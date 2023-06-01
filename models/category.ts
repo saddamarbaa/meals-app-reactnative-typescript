@@ -1,6 +1,6 @@
 import { CategoryT } from '../types'
 
-class Category {
+export class Category {
 	id: string
 	title: string
 	color: string
