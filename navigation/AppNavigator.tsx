@@ -1,15 +1,11 @@
 import * as React from 'react'
-
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Text } from 'react-native'
-import {
-	CategoriesScreen,
-	MealOverViewScreen,
-	MealDetailScreen,
-} from '../screens'
+
+import { MealOverViewScreen, MealDetailScreen } from '../screens'
 import { RootStackParamList } from '../types'
 import { GlobalScreenOption } from '../constants'
+import DrawerNavigator from './DrawerNavigator'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -23,21 +19,18 @@ export function AppNavigator() {
 					headerTitleAlign: 'center',
 				})}>
 				<Stack.Screen
-					name="MealCategories"
-					component={CategoriesScreen}
-					options={{
-						title: 'Meals Categories',
-					}}
+					name="Drawer"
+					component={DrawerNavigator}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name="MealOverView"
 					component={MealOverViewScreen}
-					initialParams={{ categoryId: 'tetsId' }}
+					initialParams={{ categoryId: 'testId' }}
 					options={({ route, navigation }) => ({
-						title: route.params.categoryId,
+						title: route.params?.categoryId || '',
 					})}
 				/>
-
 				<Stack.Screen name="MealDetail" component={MealDetailScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
