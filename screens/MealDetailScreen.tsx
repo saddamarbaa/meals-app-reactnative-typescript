@@ -10,6 +10,7 @@ import {
 import React, { useLayoutEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
+
 import { MealDetailScreenProps, MealT } from '../types'
 import { MEALS } from '../utils'
 import { colors } from '../constants'
