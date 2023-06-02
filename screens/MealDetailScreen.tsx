@@ -16,6 +16,8 @@ import { MEALS } from '../utils'
 import { colors } from '../constants'
 import { Card } from '../components'
 
+
+
 export function MealDetailScreen({ navigation, route }: MealDetailScreenProps) {
 	const [meal, setMeal] = useState<MealT | null>(null)
 
