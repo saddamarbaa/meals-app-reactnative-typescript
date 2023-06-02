@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
 	innerContainer: {
 		overflow: 'hidden',
 		borderRadius: 8,
+		borderTopLeftRadius: 0,
+		borderTopRightRadius: 0,
 		// padding: 2,
 	},
 	title: {

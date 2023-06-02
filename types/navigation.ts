@@ -9,6 +9,7 @@ export type RootStackParamList = {
 	MealOverView: { categoryId: string }
 	MealDetail: { mealId: string }
 	Feed: { sort: 'latest' | 'top' } | undefined
+	User: undefined
 }
 
 export type MealCategoriesScreenProps = NativeStackScreenProps<
