@@ -1,17 +1,20 @@
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { Provider as ReduxProvider } from 'react-redux'
 
 import { AppNavigator } from './navigation'
-import { FavoriteMealsProvider } from './globalStates'
+import { FavoriteMealsProvider as ContextProvider, store } from './globalStates'
 
 export default function App() {
 	return (
 		<>
 			<SafeAreaProvider>
 				<StatusBar style="light" />
-				<FavoriteMealsProvider>
-					<AppNavigator />
-				</FavoriteMealsProvider>
+				<ContextProvider>
+					<ReduxProvider store={store}>
+						<AppNavigator />
+					</ReduxProvider>
+				</ContextProvider>
 			</SafeAreaProvider>
 		</>
 	)

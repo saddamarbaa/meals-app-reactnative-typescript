@@ -8,7 +8,6 @@ import {
 	ScrollView,
 } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { AntDesign } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -16,20 +15,36 @@ import { MealDetailScreenProps, MealT } from '../types'
 import { MEALS } from '../utils'
 import { colors } from '../constants'
 import { Card } from '../components'
-import { useFavoriteMeals } from '../globalStates'
+import {
+	RootState,
+	reduxAddFavoriteMeal,
+	reduxRemoveFavoriteMeal,
+	useContextFavoriteMeals,
+} from '../globalStates'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 export function MealDetailScreen({ navigation, route }: MealDetailScreenProps) {
 	const [meal, setMeal] = useState<MealT | null>(null)
-	const { favoriteMeals, addFavoriteMeal, removeFavoriteMeal } =
-		useFavoriteMeals()
+	const reduxFavoriteMeals = useSelector(
+		(state: RootState) => state.reduxFavoriteMeals,
+	)
+	const {
+		contextFavoriteMeals,
+		contextRemoveFavoriteMeal,
+		contextAddFavoriteMeal,
+	} = useContextFavoriteMeals()
 	const [isFavorite, setIsFavorite] = useState(false)
+	const dispatch = useDispatch()
 
 	useLayoutEffect(() => {
 		const { mealId } = route.params
 		const selectedMeal = MEALS.find((meal) => meal.id === mealId)
 		setMeal(selectedMeal || null)
-		setIsFavorite(selectedMeal ? favoriteMeals.includes(selectedMeal) : false)
-	}, [route.params, favoriteMeals])
+		setIsFavorite(
+			selectedMeal ? reduxFavoriteMeals.includes(selectedMeal) : false,
+		)
+	}, [route.params, reduxFavoriteMeals])
 
 	useLayoutEffect(() => {
 		const { mealId } = route.params
@@ -65,10 +80,12 @@ export function MealDetailScreen({ navigation, route }: MealDetailScreenProps) {
 	function handleAddToFavorites() {
 		if (meal) {
 			if (isFavorite) {
-				removeFavoriteMeal(meal.id)
+				// contextRemoveFavoriteMeal(meal.id)
+				dispatch(reduxRemoveFavoriteMeal(meal.id))
 				console.log('Meal removed from favorites:', meal.title)
 			} else {
-				addFavoriteMeal(meal)
+				// contextAddFavoriteMeal(meal)
+				dispatch(reduxAddFavoriteMeal(meal))
 				console.log('Meal added to favorites:', meal.title)
 			}
 			setIsFavorite(!isFavorite)

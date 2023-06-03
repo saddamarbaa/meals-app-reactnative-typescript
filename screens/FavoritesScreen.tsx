@@ -13,15 +13,28 @@ import { AntDesign } from '@expo/vector-icons'
 import { FavoriteMealScreenProps, MealT } from '../types'
 import { colors } from '../constants'
 import { Card, FormButton } from '../components'
-import { useFavoriteMeals } from '../globalStates'
+import {
+	RootState,
+	reduxRemoveFavoriteMeal,
+	useContextFavoriteMeals,
+} from '../globalStates'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export function FavoritesScreen({
 	navigation,
 	route,
 }: FavoriteMealScreenProps) {
-	const { favoriteMeals, removeFavoriteMeal } = useFavoriteMeals()
+	const {
+		contextAddFavoriteMeal,
+		contextFavoriteMeals,
+		contextRemoveFavoriteMeal,
+	} = useContextFavoriteMeals()
+	const reduxFavoriteMeals = useSelector(
+		(state: RootState) => state.reduxFavoriteMeals,
+	)
 	const [refreshing, setRefreshing] = useState(false)
-
+	const dispatch = useDispatch()
 	const handleReRedirect = () => {
 		navigation.navigate('MealCategories')
 	}
@@ -80,7 +93,10 @@ export function FavoritesScreen({
 			</View>
 			<TouchableOpacity
 				style={styles.removeButton}
-				onPress={() => removeFavoriteMeal(item.id)}>
+				onPress={() => {
+					// contextRemoveFavoriteMeal(meal.id)
+					dispatch(reduxRemoveFavoriteMeal(item.id))
+				}}>
 				<AntDesign name="heart" size={24} color="red" />
 			</TouchableOpacity>
 		</View>
@@ -91,7 +107,7 @@ export function FavoritesScreen({
 			<View style={styles.container}>
 				<FlatList
 					alwaysBounceVertical={false}
-					data={favoriteMeals}
+					data={reduxFavoriteMeals}
 					renderItem={({ item, index, separators }) => {
 						return renderMealItem(item)
 					}}
