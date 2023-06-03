@@ -10,25 +10,30 @@ import {
 import React, { useLayoutEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 
 import { MealDetailScreenProps, MealT } from '../types'
 import { MEALS } from '../utils'
 import { colors } from '../constants'
 import { Card } from '../components'
-
-
+import { useFavoriteMeals } from '../globalStates'
 
 export function MealDetailScreen({ navigation, route }: MealDetailScreenProps) {
 	const [meal, setMeal] = useState<MealT | null>(null)
+	const { favoriteMeals, addFavoriteMeal, removeFavoriteMeal } =
+		useFavoriteMeals()
+	const [isFavorite, setIsFavorite] = useState(false)
 
 	useLayoutEffect(() => {
 		const { mealId } = route.params
 		const selectedMeal = MEALS.find((meal) => meal.id === mealId)
 		setMeal(selectedMeal || null)
-	}, [route.params])
+		setIsFavorite(selectedMeal ? favoriteMeals.includes(selectedMeal) : false)
+	}, [route.params, favoriteMeals])
 
 	useLayoutEffect(() => {
 		const { mealId } = route.params
+		const IconName = isFavorite ? 'star' : 'star-outline'
 		navigation.setOptions({
 			title: mealId,
 			headerTitleStyle: {
@@ -40,16 +45,37 @@ export function MealDetailScreen({ navigation, route }: MealDetailScreenProps) {
 				<TouchableOpacity
 					style={styles.backButton}
 					onPress={() => navigation.goBack()}>
-					<MaterialIcons name="arrow-back" size={24} color="white" />
+					<MaterialIcons name="arrow-back" size={24} color={colors.white} />
 				</TouchableOpacity>
 			),
 			headerRight: () => (
-				<TouchableOpacity style={styles.heartButton}>
-					<AntDesign name="star" size={24} color="white" />
+				<TouchableOpacity
+					style={styles.heartButton}
+					onPress={handleAddToFavorites}>
+					<Ionicons
+						name={IconName as 'star'}
+						size={24}
+						color={isFavorite ? colors.yellow500 : colors.white}
+					/>
 				</TouchableOpacity>
 			),
 		})
-	}, [navigation])
+	}, [navigation, meal, isFavorite])
+
+	function handleAddToFavorites() {
+		if (meal) {
+			if (isFavorite) {
+				removeFavoriteMeal(meal.id)
+				console.log('Meal removed from favorites:', meal.title)
+			} else {
+				addFavoriteMeal(meal)
+				console.log('Meal added to favorites:', meal.title)
+			}
+			setIsFavorite(!isFavorite)
+		} else {
+			console.log('Meal is null')
+		}
+	}
 
 	return meal ? (
 		<SafeAreaView style={styles.container}>
@@ -95,7 +121,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	card: {
-		backgroundColor: '#563e33',
+		backgroundColor: colors.primary800,
 		marginBottom: 8,
 		paddingVertical: 8,
 		paddingHorizontal: 16,
