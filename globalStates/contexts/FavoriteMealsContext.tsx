@@ -1,19 +1,18 @@
 import { MealT } from '../../types'
-
 import React, { createContext, useState, useContext, ReactNode } from 'react'
 
 // Define the type for the context value
 type FavoriteMealsContextProps = {
-	favoriteMeals: MealT[]
-	addFavoriteMeal: (meal: MealT) => void
-	removeFavoriteMeal: (mealId: string) => void
+	contextFavoriteMeals: MealT[]
+	contextAddFavoriteMeal: (meal: MealT) => void
+	contextRemoveFavoriteMeal: (mealId: string) => void
 }
 
 // Create the context
 const FavoriteMealsContext = createContext<FavoriteMealsContextProps>({
-	favoriteMeals: [],
-	addFavoriteMeal: () => {},
-	removeFavoriteMeal: () => {},
+	contextFavoriteMeals: [],
+	contextAddFavoriteMeal: () => {},
+	contextRemoveFavoriteMeal: () => {},
 })
 
 // Create a provider component
@@ -21,25 +20,25 @@ export const FavoriteMealsProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
 	// State to store the favorite meals
-	const [favoriteMeals, setFavoriteMeals] = useState<MealT[]>([])
+	const [contextFavoriteMeals, setContextFavoriteMeals] = useState<MealT[]>([])
 
 	// Add a meal to favorites
-	const addFavoriteMeal = (meal: MealT) => {
-		setFavoriteMeals((prevFavoriteMeals) => [...prevFavoriteMeals, meal])
+	const contextAddFavoriteMeal = (meal: MealT) => {
+		setContextFavoriteMeals((prevFavoriteMeals) => [...prevFavoriteMeals, meal])
 	}
 
 	// Remove a meal from favorites
-	const removeFavoriteMeal = (mealId: string) => {
-		setFavoriteMeals((prevFavoriteMeals) =>
+	const contextRemoveFavoriteMeal = (mealId: string) => {
+		setContextFavoriteMeals((prevFavoriteMeals) =>
 			prevFavoriteMeals.filter((meal) => meal.id !== mealId),
 		)
 	}
 
 	// Context value object
 	const contextValue: FavoriteMealsContextProps = {
-		favoriteMeals,
-		addFavoriteMeal,
-		removeFavoriteMeal,
+		contextFavoriteMeals,
+		contextAddFavoriteMeal,
+		contextRemoveFavoriteMeal,
 	}
 
 	// Provide the context value to the children components
@@ -51,4 +50,4 @@ export const FavoriteMealsProvider: React.FC<{ children: ReactNode }> = ({
 }
 
 // Custom hook to access the favorite meals context
-export const useFavoriteMeals = () => useContext(FavoriteMealsContext)
+export const useContextFavoriteMeals = () => useContext(FavoriteMealsContext)
