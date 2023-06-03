@@ -36,3 +36,9 @@ export type MealDetailScreenProps = DrawerScreenProps<
 	RootStackParamList,
 	'MealDetail'
 >
+
+// Type for the navigation prop of MealDetail screen
+export type FavoriteMealScreenProps = DrawerScreenProps<
+	RootStackParamList,
+	'Favorites'
+>
